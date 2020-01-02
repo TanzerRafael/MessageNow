@@ -1,0 +1,6 @@
+<div class="login-form">
+  <h1 class="from-header">Login</h1>
+  <input name="username" type="text" placeholder="username" [(ngModel)]="username" />
+  <input name="password" type="password" placeholder="password" [(ngModel)]="password" />
+  <button class="form-button" (click)="onConnect()" [disabled]="!isValid()">Connect</button>
+</div>
