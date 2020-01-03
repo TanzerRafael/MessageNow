@@ -15,8 +15,37 @@ export class AppComponent {
     return this.state;
   }
 
+  getProgress(): number {
+    let result = 0;
+
+    switch (this.state) {
+      case State.Login:
+        result = 33;
+        break;
+      case State.GroupChoosing:
+        result = 66;
+        break;
+      case State.Chat:
+        result = 100;
+        break;
+      default:
+        result = 0;
+        break;
+    }
+
+    return result;
+  }
+
   loginUser(user: User) {
     console.log('user: ' + user + ' loginned');
+    this.chooseGroup();
+  }
+
+  startChat() {
     this.state = State.Chat;
+  }
+
+  chooseGroup() {
+    this.state = State.GroupChoosing;
   }
 }

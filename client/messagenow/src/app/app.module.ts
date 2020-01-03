@@ -7,12 +7,14 @@ import {MatProgressBarModule} from '@angular/material';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ChatComponent } from './chat/chat.component';
+import { SelectgroupComponent } from './selectgroup/selectgroup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ChatComponent
+    ChatComponent,
+    SelectgroupComponent
   ],
   imports: [
     BrowserModule,
