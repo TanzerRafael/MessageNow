@@ -10,6 +10,7 @@ import {User} from './models/user.model';
 export class AppComponent {
   title = 'messagenow';
   private state: State = State.Login;
+  selectedGroup = '';
 
   getState(): State {
     return this.state;
@@ -41,8 +42,9 @@ export class AppComponent {
     this.chooseGroup();
   }
 
-  startChat() {
+  startChat(group: string) {
     this.state = State.Chat;
+    this.selectedGroup = group;
   }
 
   chooseGroup() {

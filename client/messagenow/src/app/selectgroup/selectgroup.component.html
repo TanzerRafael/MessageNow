@@ -1,5 +1,15 @@
 <p>selectgroup works!</p>
-<div *ngFor="let group of getAvailableGroups()">
+
+<mat-list >
+  <div class="group-list">
+    <ng-container *ngFor="let group of getAvailableGroups()">
+      <mat-list-item (click)="onClick(group)">{{group}}</mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </div>
+</mat-list>
+
+<!--<div *ngFor="let group of getAvailableGroups()">
   {{group}}
 </div>
-<button (click)="onClick()">Next</button>
+<button (click)="onClick()">Next</button>-->

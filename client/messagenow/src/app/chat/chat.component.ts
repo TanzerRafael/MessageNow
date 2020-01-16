@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-chat',
@@ -7,6 +7,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class ChatComponent implements OnInit {
   @Output() chooseGroup: EventEmitter<any> = new EventEmitter<any>();
+  @Input() group = '';
 
   constructor() { }
 

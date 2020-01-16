@@ -6,7 +6,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./selectgroup.component.css']
 })
 export class SelectgroupComponent implements OnInit {
-  @Output() chosen: EventEmitter<any> = new EventEmitter<any>();
+  @Output() chosen: EventEmitter<string> = new EventEmitter<string>();
   private groups: string[];
 
   constructor() {
@@ -15,7 +15,7 @@ export class SelectgroupComponent implements OnInit {
 
   ngOnInit() {
     this.groups = [
-      'Schule', 'Familie', 'Privat'
+      'Schule', 'Familie', 'Privat', 'Bafi', 'Koppler'
     ];
   }
 
@@ -23,7 +23,7 @@ export class SelectgroupComponent implements OnInit {
     return this.groups;
   }
 
-  onClick() {
-    this.chosen.emit(undefined);
+  onClick(group: string) {
+    this.chosen.emit(group);
   }
 }
