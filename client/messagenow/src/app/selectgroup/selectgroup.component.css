@@ -1,7 +1,9 @@
 .group-list {
-  margin-left: 2em;
+  /*margin-left: 2em;*/
   border: 3px solid lightgrey;
   border-radius: 10px;
+  box-shadow: 0 0 100px rgba(5,5,13,0.93) ;
+
 
   position: absolute;
   top: 50%;
@@ -9,12 +11,10 @@
   transform: translate(-50%, -50%);
 
   width: 50%;
-
-  box-shadow: 0px 0px 100px rgba(5,5,13,0.93) ;
   /*box-shadow: 0px 0px 50px orange ;*/
 }
 
 .group-list mat-list-item:hover {
-  background-color: rgba(113, 247, 232, 0.56);
+  background-color: rgba(203, 247, 245, 0.56);
   border-radius: 5px;
 }
