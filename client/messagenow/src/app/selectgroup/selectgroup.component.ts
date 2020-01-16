@@ -7,6 +7,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class SelectgroupComponent implements OnInit {
   @Output() chosen: EventEmitter<string> = new EventEmitter<string>();
+  @Output() logout: EventEmitter<any> = new EventEmitter<any>();
   private groups: string[];
 
   constructor() {
@@ -25,5 +26,9 @@ export class SelectgroupComponent implements OnInit {
 
   onClick(group: string) {
     this.chosen.emit(group);
+  }
+
+  onLogout() {
+    this.logout.emit(undefined);
   }
 }

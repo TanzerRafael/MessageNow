@@ -1,5 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
 
+/*div {
+  --login-form-primary: #3498db;
+  --login-form-secondary: #2ecc71;
+  --login-form-background: #191919;
+}*/
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mn-light-theme {
+  --color-primary: #3498db;
+  --color-secondary: #2ecc71;
+  --color-background-primary: white;
+  --color-background-secondary: white;
+  --color-shadow: rgba(5,5,13,0.93);
+
+  color: black;
+
+  background-color: var(--color-background-secondary, #34495e);
+}
+
+.mn-dark-theme {
+  --color-primary: #3498db;
+  --color-secondary: #2ecc71;
+  --color-background-primary: #191919;
+  --color-background-secondary: #34495e;
+  /*--color-shadow: rgba(255, 170, 78, 0.93);*/
+  --color-shadow: rgba(255, 170, 78, 0.93);
+
+  color: white;
+  background-color: var(--color-background-secondary, white);
+}
+
+.mn-header {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.mn-box {
+  border: 3px solid lightgrey;
+  border-radius: 10px;
+
+  box-shadow: 0 0 100px var(--color-shadow);
+
+  background-color: var(--color-background-primary, white);
+}
+
+/* positioning on the page's center */
+.mn-absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mn-button {
+  background: none;
+  display: block;
+  margin: 20px auto;
+  padding: 14px 40px;
+
+  border: 2px solid var(--color-secondary, #2ecc71);
+  border-radius: 24px;
+  outline: none;
+
+  text-align: center;
+
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.mn-button:hover {
+  background: var(--color-secondary, #2ecc71);
+  color: white;
+}

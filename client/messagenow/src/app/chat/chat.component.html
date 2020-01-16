@@ -1,8 +1,4 @@
-<!--
-<mat-progress-bar mode="determinate" value="100"></mat-progress-bar>
--->
-
-<div class="chat-box">
+<div class="mn-box mn-absolute-center chat-box">
   <h1>Group: {{group}}</h1>
   <div class="chat-room chat-indent" id="chat-room">
     <!--<div class="chat-indent">
@@ -11,8 +7,8 @@
       </div>
     </div>-->
   </div>
-  <button class="chat-button" (click)="createNewMessage('Luke', 'The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.\n'+
+  <button class="mn-button" (click)="createNewMessage('Luke', 'The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.\n'+
 '      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally\n'+
 '      bred for hunting.')">Create</button>
-  <button class="chat-button" (click)="onChooseNewGroup()">Back</button>
+  <button class="mn-button" (click)="onChooseNewGroup()">Back</button>
 </div>

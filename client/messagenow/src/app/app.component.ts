@@ -50,4 +50,9 @@ export class AppComponent {
   chooseGroup() {
     this.state = State.GroupChoosing;
   }
+
+  logoutUser() {
+    this.selectedGroup = '';
+    this.state = State.Login;
+  }
 }

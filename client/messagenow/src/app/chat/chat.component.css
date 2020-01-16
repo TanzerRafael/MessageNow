@@ -1,14 +1,5 @@
 .chat-box {
-  border: 3px solid lightgrey;
-  border-radius: 10px;
-  box-shadow: 0 0 100px rgba(5,5,13,0.93) ;
-
   width: 50%;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .chat-room {
@@ -16,36 +7,14 @@
   height: 600px;
   margin: 0 auto;
 
-  border: 3px solid #3498db;
+  border: 3px solid var(--color-primary, #3498db);
   border-radius: 10px;
 
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .chat-indent {
   padding: 5px 5px;
-}
-
-.chat-button {
-  background: none;
-  display: block;
-  margin: 20px auto;
-  padding: 14px 40px;
-
-  border: 2px solid #2ecc71;
-  border-radius: 24px;
-  outline: none;
-
-  text-align: center;
-
-
-  transition: 0.25s;
-  cursor: pointer;
-}
-
-.chat-button:hover {
-  background: #2ecc71;
-  color: white;
 }
 
 .message {

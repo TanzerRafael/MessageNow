@@ -1,30 +1,12 @@
-div {
-  --login-form-primary: #3498db;
-  --login-form-secondary: #2ecc71;
-  --login-form-background: #191919;
-}
-
 .login-form {
   width: 350px;
   padding: 40px;
 
-  /*background: var(--login-form-background);*/
+  /*background: var(--color-background-primary);*/
   text-align: center;
-
-  border: 3px solid lightgrey;
-  border-radius: 10px;
-
-  box-shadow: 0px 0px 100px rgba(5,5,13,0.93) ;
-
-  /* positioning on the page's center */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .login-form .from-header {
-  /*color: white;*/
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -38,12 +20,11 @@ div {
   padding: 14px 10px;
   width: 200px;
 
-  border: 2px solid var(--login-form-primary);
+  border: 2px solid var(--color-primary);
   border-radius: 24px;
   outline: none;
 
   text-align: center;
-  /*color: white;*/
 
   transition: 0.25s;
 }
@@ -51,26 +32,5 @@ div {
 .login-form input[type = "text"]:focus,
 .login-form input[type = "password"]:focus {
   width: 280px;
-  border-color: var(--login-form-secondary);
-}
-
-.login-form .form-button {
-  background: none;
-  display: block;
-  margin: 20px auto;
-  padding: 14px 40px;
-
-  border: 2px solid var(--login-form-secondary);
-  border-radius: 24px;
-  outline: none;
-
-  text-align: center;
-  /*color: white;*/
-
-  transition: 0.25s;
-  cursor: pointer;
-}
-
-.login-form .form-button:hover {
-  background: var(--login-form-secondary);
+  border-color: var(--color-secondary);
 }
