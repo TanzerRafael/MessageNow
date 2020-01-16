@@ -5,32 +5,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var http_1 = __importDefault(require("http"));
-//import * as socketio from "socket.io";
-//import * as path from "path";
-var socket_io_1 = __importDefault(require("socket.io"));
+var path_1 = __importDefault(require("path"));
 var port = 3000;
 var app = express_1.default();
+app.set("port", port);
 var server = new http_1.default.Server(app);
-var socketServer = socket_io_1.default.listen(server, {
+var io = require("socket.io")(server);
+/*const socketServer = socketio.listen(server, {
     path: '/whatsapp',
-});
+    // serveClient: false,
+    // pingInterval: 10000,
+    // pingTimeout: 5000,
+    // cookie: false
+});*/
 app.get('/', function (req, res) {
-    res.send('hello');
+    res.sendFile(path_1.default.resolve('./build/index.html'));
 });
-socketServer.on('connection', function (ws) {
+/*socketServer.on('connection', ws => {
     console.log('a user connected');
-    ws.on('login', function (data) {
+
+    ws.on('login', data => {
         console.log('login: ' + data);
     });
-    ws.on('message', function (message) {
+
+    ws.on('message', message => {
         console.log('message: ' + message);
         socketServer.emit('message', message);
     });
-    ws.on('logout', function (data) {
+
+    ws.on('logout', data => {
         console.log('logout: ' + data);
     });
-    ws.on('disconnect', function () {
+
+    ws.on('disconnect', () => {
         console.log('user disconnected');
+    })
+});*/
+io.on("connection", function (socket) {
+    console.log("User connected");
+    socket.on("message", function (msg) {
+        console.log(msg);
     });
 });
 server.listen(port, function () {
