@@ -27,6 +27,7 @@
   text-align: center;
 
   transition: 0.25s;
+  color: var(--color-text-primary);
 }
 
 .login-form input[type = "text"]:focus,

@@ -15,8 +15,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --color-background-primary: white;
   --color-background-secondary: white;
   --color-shadow: rgba(5,5,13,0.93);
+  --color-text-primary: black;
 
-  color: black;
+  color: var(--color-text-primary, black);
 
   background-color: var(--color-background-secondary, #34495e);
 }
@@ -27,9 +28,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --color-background-primary: #191919;
   --color-background-secondary: #34495e;
   /*--color-shadow: rgba(255, 170, 78, 0.93);*/
-  --color-shadow: rgba(255, 170, 78, 0.93);
+  --color-shadow: rgba(24, 204, 34, 0.93);
+  --color-text-primary: white;
 
-  color: white;
+  color: var(--color-text-primary, white);
   background-color: var(--color-background-secondary, white);
 }
 
@@ -69,6 +71,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   transition: 0.25s;
   cursor: pointer;
+
+  color: var(--color-text-primary);
 }
 
 .mn-button:hover {
