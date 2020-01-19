@@ -1,4 +1,5 @@
 <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
+<mat-slide-toggle (change)="switchTheme()" [color]="color" [(ngModel)]="darkMode"></mat-slide-toggle>
 <app-login *ngIf="getState() === 'LOGIN'" (finished)="loginUser($event)">
   loading...
 </app-login>

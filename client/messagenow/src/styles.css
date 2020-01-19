@@ -7,7 +7,10 @@
 }*/
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .mn-light-theme {
   --color-primary: #3498db;
@@ -16,23 +19,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --color-background-secondary: white;
   --color-shadow: rgba(5,5,13,0.93);
   --color-text-primary: black;
+  --color-border: lightgrey;
 
   color: var(--color-text-primary, black);
 
-  background-color: var(--color-background-secondary, #34495e);
+  background-color: var(--color-background-secondary, white);
+
 }
 
 .mn-dark-theme {
+  /* Form elemente*/
   --color-primary: #3498db;
   --color-secondary: #2ecc71;
-  --color-background-primary: #191919;
+
+  --color-background-primary: #34495e;
   --color-background-secondary: #34495e;
+  /*--color-background-secondary: #191919;*/
   /*--color-shadow: rgba(255, 170, 78, 0.93);*/
-  --color-shadow: rgba(24, 204, 34, 0.93);
+  --color-shadow: rgba(0, 40, 255, 0.64);
   --color-text-primary: white;
+  --color-border: #191919;
 
   color: var(--color-text-primary, white);
-  background-color: var(--color-background-secondary, white);
+
+  background-color: var(--color-background-secondary, #34495e);
 }
 
 .mn-header {
@@ -41,7 +51,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .mn-box {
-  border: 3px solid lightgrey;
+  border: 3px solid var(--color-border);
   border-radius: 10px;
 
   box-shadow: 0 0 100px var(--color-shadow);
