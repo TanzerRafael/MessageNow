@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {State} from './models/state.enum';
 import {User} from './models/user.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
   title = 'messagenow';
@@ -78,5 +79,10 @@ export class AppComponent implements OnInit {
       this.bodyElement.classList.add('mn-light-theme');
       this.bodyElement.classList.remove('mn-dark-theme');
     }
+  }
+
+  onLogout() {
+    this.state = State.Login;
+    this.selectedGroup = '';
   }
 }
