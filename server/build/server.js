@@ -44,7 +44,7 @@ app.get('/', function (req, res) {
 io.on("connection", function (socket) {
     console.log("User connected");
     socket.on("message", function (msg) {
-        console.log(msg);
+        io.emit("message", msg);
     });
 });
 server.listen(port, function () {

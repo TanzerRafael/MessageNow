@@ -49,8 +49,9 @@ io.on("connection", (socket: any) => {
     console.log("User connected");
 
     socket.on("message", (msg: any) =>{
-        console.log(msg);
-    })
+
+        io.emit("message", msg);
+    });
 });
 
 server.listen(port, () => {
