@@ -1,16 +1,36 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {State} from './models/state.enum';
 import {User} from './models/user.model';
+import {MemoryDataProvider} from './services/memorydataprovider.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'messagenow';
   private state: State = State.Login;
   selectedGroup = '';
+  color = 'warn';
+  darkMode = false;
+  private bodyElement;
+  private user: User = null;
+
+  constructor(private dataProvider: MemoryDataProvider) {
+  }
+
+  ngOnInit(): void {
+    this.bodyElement = document.querySelector('body');
+
+    // Hat der Benutzer bei seinen Betriebsystem den Dark Mode eingestellt
+    // wird dieser hier übernommen
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      this.darkMode = true;
+    }
+    this.switchTheme();
+  }
 
   getState(): State {
     return this.state;
@@ -37,9 +57,20 @@ export class AppComponent {
     return result;
   }
 
+  getUser(): User {
+    return this.user;
+  }
+
   loginUser(user: User) {
     console.log('user: ' + user + ' loginned');
-    this.chooseGroup();
+    const result: boolean = this.dataProvider.login(user);
+
+    if (result) {
+      this.user = user;
+      this.chooseGroup();
+    } else {
+      alert('user not found');
+    }
   }
 
   startChat(group: string) {
@@ -49,5 +80,26 @@ export class AppComponent {
 
   chooseGroup() {
     this.state = State.GroupChoosing;
+  }
+
+  logoutUser() {
+    this.dataProvider.logout(this.user);
+    this.selectedGroup = '';
+    this.state = State.Login;
+  }
+
+  switchTheme() {
+    if (this.darkMode) {
+      this.bodyElement.classList.remove('mn-light-theme');
+      this.bodyElement.classList.add('mn-dark-theme');
+    } else {
+      this.bodyElement.classList.add('mn-light-theme');
+      this.bodyElement.classList.remove('mn-dark-theme');
+    }
+  }
+
+  onLogout() {
+    this.state = State.Login;
+    this.selectedGroup = '';
   }
 }

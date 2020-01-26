@@ -1,4 +1,5 @@
-import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
+import {Message} from '../../models/message.model';
 
 @Component({
   selector: 'app-message',
@@ -6,10 +7,9 @@ import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
-  @Input() user = '';
-  @Input() text = '';
+  @Input() message: Message;
 
-  constructor(public viewContainerRef: ViewContainerRef) { }
+  constructor() { }
 
   ngOnInit() {
   }

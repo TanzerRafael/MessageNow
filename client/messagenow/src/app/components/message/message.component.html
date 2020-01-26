@@ -1,0 +1,19 @@
+<mat-card class="message">
+  <mat-card-header>
+    <!--<div mat-card-avatar class="example-header-image"></div>-->
+    <mat-card-title>{{ message.name }}</mat-card-title>
+    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+  </mat-card-header>
+  <!-- src="https://material.angular.io/assets/img/examples/shiba2.jpg" -->
+  <img mat-card-image [src]="message.imageLink" alt="Message image"
+       *ngIf="message.imageLink !== ''" />
+  <mat-card-content>
+    <p>
+      {{ message.text }}
+    </p>
+  </mat-card-content>
+  <!--<mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>-->
+</mat-card>

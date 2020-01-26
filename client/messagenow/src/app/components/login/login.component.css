@@ -1,0 +1,37 @@
+.login-form {
+  width: 350px;
+  padding: 40px;
+
+  /*background: var(--color-background-primary);*/
+  text-align: center;
+}
+
+.login-form .form-header {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.login-form input[type = "text"],
+.login-form input[type = "password"] {
+  background: none;
+  display: block;
+
+  margin: 20px auto;
+  padding: 14px 10px;
+  width: 200px;
+
+  border: 2px solid var(--color-primary);
+  border-radius: 24px;
+  outline: none;
+
+  text-align: center;
+
+  transition: 0.25s;
+  color: var(--color-text-primary);
+}
+
+.login-form input[type = "text"]:focus,
+.login-form input[type = "password"]:focus {
+  width: 280px;
+  border-color: var(--color-secondary);
+}

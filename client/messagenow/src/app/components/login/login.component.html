@@ -1,9 +1,9 @@
 <!--
 <mat-progress-bar mode="determinate" value="33"></mat-progress-bar>
 -->
-<div class="messagenow-box login-form">
-  <h1 class="from-header">Login</h1>
+<div class="mn-box mn-absolute-center login-form">
+  <h1 class="mn-header">Login</h1>
   <input name="username" type="text" placeholder="username" [(ngModel)]="username" />
   <input name="password" type="password" placeholder="password" [(ngModel)]="password" />
-  <button class="form-button" (click)="onConnect()" [disabled]="!isValid()">Connect</button>
+  <button class="mn-button" (click)="onConnect()" [disabled]="!isValid()">Connect</button>
 </div>
