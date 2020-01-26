@@ -8,14 +8,26 @@
     <title>Document</title>
   </head>
   <body>
+    <input type="text" id="msgInput" value="Test">
     <button onClick="sendMsg()">Hit Me</button>
+    <ul id="msgContainer">
 
+    </ul>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
-      const socket = io("http://localhost:3000");
+      let msg;
+      const socket = io("http://localhost:3000/nsp");
+
+      socket.on("message", data =>{
+        console.log(data);
+        msg=data;
+        document.getElementById("msgContainer")
+        .appendChild(document.createElement("li"))
+        .appendChild(document.createTextNode(msg));
+      })
 
       function sendMsg() {
-        socket.emit("message", "HELLO WORLD");
+        socket.emit("message", document.getElementById("msgInput").value);
       }
     </script>
   </body>
