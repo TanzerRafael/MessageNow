@@ -1,14 +1,12 @@
 <div class="mn-box mn-absolute-center chat-box">
   <h1>Group: {{group}}</h1>
   <div class="chat-room chat-indent" id="chat-room">
-    <!--<div class="chat-indent">
-      <div *ngFor="let m of componentRefs">
-        <ng-template #m></ng-template>
-      </div>
-    </div>-->
+    <ng-container *ngFor="let message of messages">
+      <app-message [message]="message"></app-message>
+    </ng-container>
   </div>
   <button class="mn-button" (click)="createNewMessage('Luke', 'The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.\n'+
 '      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally\n'+
-'      bred for hunting.')">Create</button>
+'      bred for hunting.', true)">Create</button>
   <button class="mn-button" (click)="onChooseNewGroup()">Back</button>
 </div>
