@@ -8,6 +8,7 @@ import {
 import {Message} from '../../models/message.model';
 import {User} from '../../models/user.model';
 import {MemoryDataProvider} from '../../services/memorydataprovider.service';
+import {SocketDataProviderService} from '../../services/socketdataprovider.service';
 
 @Component({
   selector: 'app-chat',
@@ -21,7 +22,7 @@ export class ChatComponent implements OnInit {
   messages: Message[] = [];
 
   constructor(private dataProvider: MemoryDataProvider) {
-
+    // this.dataProvider.addNewMessageListener(data => this.addNewMessage(data));
   }
 
   ngOnInit() {

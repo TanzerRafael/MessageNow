@@ -4,15 +4,19 @@ import {IMnDataService} from '../contracts/mndataservice.interface';
 import {User} from '../models/user.model';
 import {Message} from '../models/message.model';
 
+declare type MessageListener = (data: any) => void;
+
 @Injectable({
   providedIn: 'root'
 })
 export class SocketDataProviderService implements IMnDataService {
   private groups: string[] = null;
+  private messageListener: MessageListener[] = [];
 
   constructor(private socket: Socket) {
     this.socket.on('new-message', data => {
       console.log(data);
+      this.messageListener.forEach(ml => ml(data));
     });
   }
 
@@ -41,5 +45,9 @@ export class SocketDataProviderService implements IMnDataService {
 
   logout(user: User): void {
     this.socket.emit('logout', user);
+  }
+
+  addNewMessageListener(listener: MessageListener) {
+    this.messageListener.push(listener);
   }
 }
