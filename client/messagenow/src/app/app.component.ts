@@ -1,16 +1,31 @@
-import {Component} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {State} from './models/state.enum';
 import {User} from './models/user.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'messagenow';
   private state: State = State.Login;
   selectedGroup = '';
+  color = 'warn';
+  darkMode = false;
+  private bodyElement;
+
+  ngOnInit(): void {
+    this.bodyElement = document.querySelector('body');
+
+    // Hat der Benutzer bei seinen Betriebsystem den Dark Mode eingestellt
+    // wird dieser hier übernommen
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      this.darkMode = true;
+    }
+    this.switchTheme();
+  }
 
   getState(): State {
     return this.state;
@@ -49,5 +64,25 @@ export class AppComponent {
 
   chooseGroup() {
     this.state = State.GroupChoosing;
+  }
+
+  logoutUser() {
+    this.selectedGroup = '';
+    this.state = State.Login;
+  }
+
+  switchTheme() {
+    if (this.darkMode) {
+      this.bodyElement.classList.remove('mn-light-theme');
+      this.bodyElement.classList.add('mn-dark-theme');
+    } else {
+      this.bodyElement.classList.add('mn-light-theme');
+      this.bodyElement.classList.remove('mn-dark-theme');
+    }
+  }
+
+  onLogout() {
+    this.state = State.Login;
+    this.selectedGroup = '';
   }
 }

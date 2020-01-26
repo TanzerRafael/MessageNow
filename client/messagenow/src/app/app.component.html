@@ -1,8 +1,17 @@
-<mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
+<nav class="navigation">
+  <mat-toolbar color="primary">
+    <span>{{ title }}</span>
+    <span style="flex: 1 1 auto;"></span>
+    <mat-slide-toggle (change)="switchTheme()" [color]="color" [(ngModel)]="darkMode"></mat-slide-toggle>
+    <button class="mn-button" (click)="onLogout()" *ngIf="getState() !== 'LOGIN'">Logout</button>
+  </mat-toolbar>
+  <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
+</nav>
+
 <app-login *ngIf="getState() === 'LOGIN'" (finished)="loginUser($event)">
   loading...
 </app-login>
-<app-selectgroup *ngIf="getState() === 'GROUP'" (chosen)="startChat($event)">
+<app-selectgroup *ngIf="getState() === 'GROUP'" (chosen)="startChat($event)" (logout)="logoutUser()">
   loading...
 </app-selectgroup>
 <app-chat *ngIf="getState() === 'CHAT'" [group]="selectedGroup" (chooseGroup)="chooseGroup()">

@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {MemoryDataProvider} from '../../services/memorydataprovider.service';
 
 @Component({
   selector: 'app-selectgroup',
@@ -7,16 +8,15 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class SelectgroupComponent implements OnInit {
   @Output() chosen: EventEmitter<string> = new EventEmitter<string>();
+  @Output() logout: EventEmitter<any> = new EventEmitter<any>();
   private groups: string[];
 
-  constructor() {
+  constructor(private dataProvider: MemoryDataProvider) {
 
   }
 
   ngOnInit() {
-    this.groups = [
-      'Schule', 'Familie', 'Privat', 'Bafi', 'Koppler'
-    ];
+    this.groups = this.dataProvider.getGroups(null);
   }
 
   getAvailableGroups(): string[] {
@@ -25,5 +25,9 @@ export class SelectgroupComponent implements OnInit {
 
   onClick(group: string) {
     this.chosen.emit(group);
+  }
+
+  onLogout() {
+    this.logout.emit(undefined);
   }
 }

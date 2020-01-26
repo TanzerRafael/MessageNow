@@ -1,0 +1,12 @@
+<div class="mn-box mn-absolute-center group-box">
+  <h1 class="mn-header">Choose a group</h1>
+  <mat-list >
+    <div class="group-list">
+        <ng-container *ngFor="let group of getAvailableGroups()">
+          <mat-list-item (click)="onClick(group)">{{group}}</mat-list-item>
+          <mat-divider></mat-divider>
+        </ng-container>
+    </div>
+  </mat-list>
+  <button class="mn-button" (click)="onLogout()">Logout</button>
+</div>
