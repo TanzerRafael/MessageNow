@@ -1,5 +1,5 @@
 <div class="mn-box mn-absolute-center chat-box">
-  <h1>Group: {{group}}</h1>
+  <h1 class="mn-header mn-header-align-left">Group: {{group}}</h1>
   <div class="chat-room chat-indent" id="chat-room">
     <ng-container *ngFor="let message of messages">
       <app-message [message]="message"></app-message>
