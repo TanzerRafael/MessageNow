@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   title = 'messagenow';
   private state: State = State.Login;
   selectedGroup = '';
-  color = 'primary';
+  color = 'warn';
   darkMode = false;
   private bodyElement;
 

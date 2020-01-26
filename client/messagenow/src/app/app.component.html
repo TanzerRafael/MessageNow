@@ -1,11 +1,11 @@
 <nav class="navigation">
-  <mat-toolbar>
+  <mat-toolbar color="primary">
     <span>{{ title }}</span>
     <span style="flex: 1 1 auto;"></span>
     <mat-slide-toggle (change)="switchTheme()" [color]="color" [(ngModel)]="darkMode"></mat-slide-toggle>
     <button class="mn-button" (click)="onLogout()" *ngIf="getState() !== 'LOGIN'">Logout</button>
   </mat-toolbar>
-  <mat-progress-bar mode="determinate" [value]="getProgress()" color="warn"></mat-progress-bar>
+  <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
 </nav>
 
 <app-login *ngIf="getState() === 'LOGIN'" (finished)="loginUser($event)">
