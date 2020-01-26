@@ -34,8 +34,9 @@ export class SocketDataProviderService implements IMnDataService {
     this.socket.emit('send-message', { user, message });
   }
 
-  login(user: User): void {
+  login(user: User): boolean {
     this.socket.emit('login', user);
+    return true;
   }
 
   logout(user: User): void {

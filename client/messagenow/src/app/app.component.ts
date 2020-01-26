@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {State} from './models/state.enum';
 import {User} from './models/user.model';
+import {MemoryDataProvider} from './services/memorydataprovider.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,10 @@ export class AppComponent implements OnInit {
   color = 'warn';
   darkMode = false;
   private bodyElement;
+  private user: User = null;
+
+  constructor(private dataProvider: MemoryDataProvider) {
+  }
 
   ngOnInit(): void {
     this.bodyElement = document.querySelector('body');
@@ -52,9 +57,20 @@ export class AppComponent implements OnInit {
     return result;
   }
 
+  getUser(): User {
+    return this.user;
+  }
+
   loginUser(user: User) {
     console.log('user: ' + user + ' loginned');
-    this.chooseGroup();
+    const result: boolean = this.dataProvider.login(user);
+
+    if (result) {
+      this.user = user;
+      this.chooseGroup();
+    } else {
+      alert('user not found');
+    }
   }
 
   startChat(group: string) {
@@ -67,6 +83,7 @@ export class AppComponent implements OnInit {
   }
 
   logoutUser() {
+    this.dataProvider.logout(this.user);
     this.selectedGroup = '';
     this.state = State.Login;
   }

@@ -18,13 +18,20 @@ export class MemoryDataProvider implements IMnDataService {
   }
 
   getMessagesOfGroup(group: string): Message[] {
-    return [];
+    return [
+      {
+        name: 'thelegend27',
+        text: 'Constant Message',
+        imageLink: 'https://www.wallpaperup.com/uploads/wallpapers/2014/02/20/262336/110734663e76f9e54cb528808967b0ac.jpg'
+      }
+    ];
   }
 
   sendMessage(user: User, message: Message): void {
   }
 
-  login(user: User): void {
+  login(user: User): boolean {
+    return true;
   }
 
   logout(user: User): void {
