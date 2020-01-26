@@ -10,6 +10,9 @@ import { ChatComponent } from './components/chat/chat.component';
 import { SelectgroupComponent } from './components/selectgroup/selectgroup.component';
 import { MessageComponent } from './components/message/message.component';
 import {MemoryDataProvider} from './services/memorydataprovider.service';
+import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
+
+const socketConfig: SocketIoConfig = { url: 'localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import {MemoryDataProvider} from './services/memorydataprovider.service';
     MatCardModule,
     MatSlideToggleModule,
     MatToolbarModule,
+    // SocketIoModule.forRoot(socketConfig)
   ],
   providers: [MemoryDataProvider],
   bootstrap: [AppComponent]

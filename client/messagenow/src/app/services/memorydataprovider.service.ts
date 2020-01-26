@@ -23,4 +23,10 @@ export class MemoryDataProvider implements IMnDataService {
 
   sendMessage(user: User, message: Message): void {
   }
+
+  login(user: User): void {
+  }
+
+  logout(user: User): void {
+  }
 }
