@@ -1,48 +1,70 @@
-import { Server, Socket } from "socket.io";
-import express from "express"
-import Express from "express"
-import { ChatEvent } from "./constants";
-import { Message } from "./messagemodel";
+  
+import { createServer, Server } from 'http';
+import express from 'express';
+import socketIo from 'socket.io';
 
-export class ChatServer{
-    public static readonly PORT: number = 3000;
+import { Message } from './messagemodel';
 
-    private _app:Express.Application;
-    private server: Server;
-    private io: SocketIO.Server;
+export class ChatServer {
+    public static readonly PORT:number = 8080;
+    private app!: express.Application;
+    private server!: Server;
+    private io!: SocketIO.Server;
+    private port!: string | number;
 
-    private port : number;
+    //clientside: changeGroupMethod
+    private currentGroup = "";
 
-    get app (): Express.Application{
-        return this._app;
-    }
-
-    /**
-     *
-     */
     constructor() {
-        this._app=require('express');
-        this.port=ChatServer.PORT;
-        //this._app.use(cors());
-        this.server = require('http').createServer(this._app);
-        this.io = require('socket.io')();
+        this.createApp();
+        this.config();
+        this.createServer();
+        this.sockets();
+        this.listen();
     }
 
-    private listen () :void{
-        this.server.listen(this.port);
-        
+    private createApp(): void {
+        this.app = express();
+    }
 
-        this.io.on(ChatEvent.CONNECT, (client: any) => {
-            console.log('User connected');
+    private createServer(): void {
+        this.server = createServer(this.app);
+    }
 
-            client.on(ChatEvent.MESSAGE, (m: Message) => {
-                console.log('[server](msg): %s', JSON.stringify(m));
+    private config(): void {
+        this.port = process.env.PORT || ChatServer.PORT;
+    }
+
+    private sockets(): void {
+        this.io = socketIo(this.server);
+    }
+
+    private listen(): void {
+        this.server.listen(this.port, () => {
+            console.log('Running server on port %s', this.port);
+        });
+
+        this.io.on('connect', (client: any) => {
+            console.log('Connected client on port %s.', this.port);
+            client.on('message', (m: Message) => {
+                console.log('[server](message): %s', JSON.stringify(m));
                 this.io.emit('message', m);
             });
 
-            client.on(ChatEvent.DISCONNECT, ()=>{
-                console.log('client disconnected');
+            client.on('disconnect', () => {
+                console.log('Client disconnected');
+            });
+
+            client.on('change-group', (grp: Group) => {
+                if(this.currentGroup !== "")
+                    client.leave(this.currentGroup)
+                this.currentGroup = grp.Name;
             })
-        })
+
+        });
+    }
+
+    get App(): express.Application {
+        return this.app;
     }
 }
