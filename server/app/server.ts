@@ -3,7 +3,7 @@ import {ChatServer} from './chatserver';
 let app = new ChatServer().App;
 
 app.get('/', function (req, res) {
-    res.sendFile('../build/index.html');
+    res.sendFile('C:\\Users\\Rafael\\Desktop\\Schule\\SVS\\messagenow\\server\\build\\index.html');
   });
 
 export {app};

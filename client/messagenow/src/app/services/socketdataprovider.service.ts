@@ -3,6 +3,7 @@ import {Socket} from 'ngx-socket-io';
 import {IMnDataService} from '../contracts/mndataservice.interface';
 import {User} from '../models/user.model';
 import {Message} from '../models/message.model';
+import { Group } from '../models/group.model';
 
 declare type MessageListener = (data: any) => void;
 
@@ -34,17 +35,18 @@ export class SocketDataProviderService implements IMnDataService {
     return messages;
   }
 
-  sendMessage(user: User, message: Message): void {
-    this.socket.emit('send-message', { user, message });
+  sendMessage(user: User, message: Message, group: Group): void {
+    this.socket.emit('send-message', { user, message, group });
   }
 
   login(user: User): boolean {
-    this.socket.emit('login', user);
-    return true;
+    let isUser = false;
+    this.socket.emit('login', user, valid => isUser = valid);
+    return isUser;
   }
 
   logout(user: User): void {
-    this.socket.emit('logout', user);
+    this.socket.emit('disconnect', user);
   }
 
   addNewMessageListener(listener: MessageListener) {

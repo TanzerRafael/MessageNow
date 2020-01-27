@@ -8,6 +8,8 @@ var express_1 = __importDefault(require("express"));
 var socket_io_1 = __importDefault(require("socket.io"));
 var ChatServer = /** @class */ (function () {
     function ChatServer() {
+        //clientside: changeGroupMethod un-/subscribe im CLient
+        this.currentGroup = "";
         this.createApp();
         this.config();
         this.createServer();
@@ -31,15 +33,34 @@ var ChatServer = /** @class */ (function () {
         this.server.listen(this.port, function () {
             console.log('Running server on port %s', _this.port);
         });
-        this.io.on('connect', function (socket) {
+        this.io.on('connection', function (client) {
             console.log('Connected client on port %s.', _this.port);
-            socket.on('message', function (m) {
+            client.on('message', function (m) {
                 console.log('[server](message): %s', JSON.stringify(m));
                 _this.io.emit('message', m);
             });
-            socket.on('disconnect', function () {
+            /*client.on('disconnect', () => {
                 console.log('Client disconnected');
             });
+
+            client.on('change-group', (grp: Group) => {
+                if(this.currentGroup !== "")
+                    client.leave(this.currentGroup)
+                this.currentGroup = grp.name;
+            })
+
+            client.on('get-groups', (user: User, call: (data: any) => Group[]) => {
+                call(null);
+            });
+
+            client.on('get-messages', (group: Group, call: Function) => {
+
+                call();
+            });
+
+            client.on('send-message', (obj: any) => {
+                this.io.in(obj.group.name).emit('message', JSON.stringify(obj.message));
+            });*/
         });
     };
     Object.defineProperty(ChatServer.prototype, "App", {
@@ -49,7 +70,7 @@ var ChatServer = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ChatServer.PORT = 8080;
+    ChatServer.PORT = 3000;
     return ChatServer;
 }());
 exports.ChatServer = ChatServer;

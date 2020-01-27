@@ -1,18 +1,20 @@
   
 import { createServer, Server } from 'http';
 import express from 'express';
-import socketIo from 'socket.io';
+import socketIo, { Socket } from 'socket.io';
 
 import { Message } from './messagemodel';
+import {User} from './user';
+import {Group} from './groupmodel';
 
 export class ChatServer {
-    public static readonly PORT:number = 8080;
+    public static readonly PORT:number = 3000;
     private app!: express.Application;
     private server!: Server;
     private io!: SocketIO.Server;
     private port!: string | number;
 
-    //clientside: changeGroupMethod
+    //clientside: changeGroupMethod un-/subscribe im CLient
     private currentGroup = "";
 
     constructor() {
@@ -44,7 +46,7 @@ export class ChatServer {
             console.log('Running server on port %s', this.port);
         });
 
-        this.io.on('connect', (client: any) => {
+        this.io.on('connection', (client: Socket) => {
             console.log('Connected client on port %s.', this.port);
             client.on('message', (m: Message) => {
                 console.log('[server](message): %s', JSON.stringify(m));
@@ -58,9 +60,27 @@ export class ChatServer {
             client.on('change-group', (grp: Group) => {
                 if(this.currentGroup !== "")
                     client.leave(this.currentGroup)
-                this.currentGroup = grp.Name;
+                this.currentGroup = grp.name;
             })
 
+            client.on('get-groups', (user: User, call: (data: any) => Group[]) => {
+                //database
+                call(null);
+            });
+
+            client.on('get-messages', (group: Group, call: Function) => {
+                //database
+                call();
+            });
+
+            client.on('send-message', (obj: any) => {
+                this.io.in(obj.group.name).emit('message', JSON.stringify(obj.message));
+            });
+
+            client.on('login', (user: User, call: Function) => {
+                //databases
+                call(true);
+            });
         });
     }
 
