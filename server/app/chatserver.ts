@@ -3,9 +3,9 @@ import { createServer, Server } from 'http';
 import express from 'express';
 import socketIo, { Socket } from 'socket.io';
 
-import { Message } from './messagemodel';
-import {User} from './user';
-import {Group} from './groupmodel';
+import { Message } from './models/messagemodel';
+import {User} from './models/user';
+import {Group} from './models/groupmodel';
 
 export class ChatServer {
     public static readonly PORT:number = 3000;
@@ -50,6 +50,7 @@ export class ChatServer {
             console.log('Connected client on port %s.', this.port);
             client.on('message', (m: Message) => {
                 console.log('[server](message): %s', JSON.stringify(m));
+                console.log('[server](message): %s', m.text);
                 this.io.emit('message', m);
             });
 
@@ -57,29 +58,32 @@ export class ChatServer {
                 console.log('Client disconnected');
             });
 
-            client.on('change-group', (grp: Group) => {
-                if(this.currentGroup !== "")
-                    client.leave(this.currentGroup)
-                this.currentGroup = grp.name;
-            })
-
             client.on('get-groups', (user: User, call: (data: any) => Group[]) => {
                 //database
-                call(null);
+                call({name: 'grp1'});
             });
 
             client.on('get-messages', (group: Group, call: Function) => {
                 //database
-                call();
+                call({name: 'dude', text: 'deiser deise', link: ''});
             });
 
             client.on('send-message', (obj: any) => {
-                this.io.in(obj.group.name).emit('message', JSON.stringify(obj.message));
+                this.io.in(obj.group.name).emit('new-message', JSON.stringify(obj.message));
             });
 
             client.on('login', (user: User, call: Function) => {
                 //databases
                 call(true);
+            });
+
+            client.on('subscribe', (grp: Group) => {
+                client.join(grp.name);
+                console.log("Client: " + client.id + " joined Room: " + grp.name);
+            });
+            client.on('unsubscribe', (grp: Group) => {
+                client.leave(grp.name);
+                console.log("Client: " + client.id + " left Room: " + grp.name);
             });
         });
     }

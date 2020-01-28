@@ -27,7 +27,8 @@
       })
 
       function sendMsg() {
-        socket.emit("message", {name: 'uff', text: document.getElementById("msgInput").value});
+        //socket.emit("message", {name: 'uff', text: document.getElementById("msgInput").value});
+        socket.emit('subscribe', {name: 'lala', id: 'sd'});
       }
     </script>
   </body>
