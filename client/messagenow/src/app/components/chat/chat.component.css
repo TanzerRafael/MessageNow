@@ -1,16 +1,33 @@
 .chat-box {
-  width: 50%;
+  width: 70%;
+}
+
+.flex-wrapper {
+  display: flex;
 }
 
 .chat-room {
   width: 90%;
   height: 550px;
-  margin: 0 auto;
+  margin-left: 1em;
 
   border: 3px solid var(--color-primary, #3498db);
   border-radius: 10px;
 
   overflow-y: scroll;
+}
+
+.chat-row {
+  width: 100%;
+  clear: both;
+}
+
+.chat-row-left {
+  float: left;
+}
+
+.chat-room-right {
+  float: right;
 }
 
 .chat-indent {

@@ -1,4 +1,10 @@
 .message {
-  max-width: 400px;
+  clear: both;
+  width: 400px;
   margin-bottom: 10px;
+}
+
+.own-message {
+  background-color: var(--color-message);
+  color: var(--color-text-primary);
 }

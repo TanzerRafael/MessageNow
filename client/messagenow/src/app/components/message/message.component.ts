@@ -8,10 +8,16 @@ import {Message} from '../../models/message.model';
 })
 export class MessageComponent implements OnInit {
   @Input() message: Message;
+  @Input() ownMessage = false;
+  private classList: string[] = ['message', ''];
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  getClassList(): string {
+    this.classList[1] = this.ownMessage ? 'own-message' : '';
+    return this.classList.join(' ');
+  }
 }

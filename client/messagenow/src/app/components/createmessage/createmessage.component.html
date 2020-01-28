@@ -1,0 +1,16 @@
+<div class="create-message-root">
+  <div class="wrapper">
+    <mat-form-field class="create-message-form-field">
+      <mat-label>Type in your message</mat-label>
+      <textarea matInput maxlength="255" [(ngModel)]="message.text"></textarea>
+      <mat-hint align="end">{{255-message.text.length}}</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="create-message-form-field">
+      <mat-label>Put in your image link</mat-label>
+      <input  matInput [(ngModel)]="message.imageLink"/>
+    </mat-form-field>
+  </div>
+  <div>
+    <button class="mn-button" (click)="sendMessage()">Send</button>
+  </div>
+</div>

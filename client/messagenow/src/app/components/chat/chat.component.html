@@ -1,12 +1,21 @@
 <div class="mn-box mn-absolute-center chat-box">
   <h1 class="mn-header mn-header-align-left">Group: {{group}}</h1>
-  <div class="chat-room chat-indent" id="chat-room">
-    <ng-container *ngFor="let message of messages">
-      <app-message [message]="message"></app-message>
-    </ng-container>
+  <div class="flex-wrapper">
+    <div class="chat-room chat-indent" id="chat-room">
+      <div class="chat-row" *ngFor="let message of messages">
+        <app-message [message]="message"
+                     [classList]="message.name === user.name ? 'chat-room-right' : 'chat-room-left'"
+                     [ownMessage]="message.name === user.name"
+        >
+        </app-message>
+      </div>
+    </div>
+    <div>
+      <app-createmessage (newMessage)="createMessage($event)"></app-createmessage>
+    </div>
   </div>
-  <button class="mn-button" (click)="createNewMessage('The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.\n'+
+  <!-- <button class="mn-button" (click)="createNewMessage('The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.\n'+
 '      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally\n'+
-'      bred for hunting.', true)">Create</button>
+'      bred for hunting.', true)">Create</button> -->
   <button class="mn-button" (click)="onChooseNewGroup()">Back</button>
 </div>
