@@ -20,6 +20,7 @@ body {
   --color-shadow: rgba(5,5,13,0.93);
   --color-text-primary: black;
   --color-border: lightgrey;
+  --color-message: rgba(0, 252, 255, 0.13);
 
   color: var(--color-text-primary, black);
 
@@ -39,6 +40,7 @@ body {
   --color-shadow: rgba(0, 40, 255, 0.64);
   --color-text-primary: white;
   --color-border: #191919;
+  --color-message: rgba(0, 252, 255, 0.13);
 
   color: var(--color-text-primary, white);
 

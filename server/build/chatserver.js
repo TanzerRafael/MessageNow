@@ -39,28 +39,29 @@ var ChatServer = /** @class */ (function () {
                 console.log('[server](message): %s', JSON.stringify(m));
                 _this.io.emit('message', m);
             });
-            /*client.on('disconnect', () => {
+            client.on('disconnect', function () {
                 console.log('Client disconnected');
             });
-
-            client.on('change-group', (grp: Group) => {
-                if(this.currentGroup !== "")
-                    client.leave(this.currentGroup)
-                this.currentGroup = grp.name;
-            })
-
-            client.on('get-groups', (user: User, call: (data: any) => Group[]) => {
+            client.on('change-group', function (grp) {
+                if (_this.currentGroup !== "")
+                    client.leave(_this.currentGroup);
+                _this.currentGroup = grp.name;
+            });
+            client.on('get-groups', function (user, call) {
+                //database
                 call(null);
             });
-
-            client.on('get-messages', (group: Group, call: Function) => {
-
+            client.on('get-messages', function (group, call) {
+                //database
                 call();
             });
-
-            client.on('send-message', (obj: any) => {
-                this.io.in(obj.group.name).emit('message', JSON.stringify(obj.message));
-            });*/
+            client.on('send-message', function (obj) {
+                _this.io.in(obj.group.name).emit('message', JSON.stringify(obj.message));
+            });
+            client.on('login', function (user, call) {
+                //databases
+                call(true);
+            });
         });
     };
     Object.defineProperty(ChatServer.prototype, "App", {

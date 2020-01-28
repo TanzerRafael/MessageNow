@@ -13,6 +13,19 @@
   overflow-y: scroll;
 }
 
+.chat-row {
+  width: 100%;
+  clear: both;
+}
+
+.chat-row-left {
+  float: left;
+}
+
+.chat-room-right {
+  float: right;
+}
+
 .chat-indent {
   padding: 5px 5px;
 }
