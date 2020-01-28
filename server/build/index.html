@@ -9,6 +9,7 @@
   </head>
   <body>
     <input type="text" id="msgInput" value="Test">
+    <button onClick="getMsg()">Hit Me</button>
     <button onClick="sendMsg()">Hit Me</button>
     <ul id="msgContainer">
 
@@ -18,17 +19,23 @@
       let msg;
       const socket = io("http://localhost:3000");
 
-      socket.on("message", data =>{
-        console.log(data);
-        msg=data;
+      socket.on("new-message", data =>{
+        console.log(JSON.stringify(data));
+        console.log(data.text);
+        //msg=data;
         document.getElementById("msgContainer")
         .appendChild(document.createElement("li"))
-        .appendChild(document.createTextNode(msg));
+        .appendChild(document.createTextNode(data.text));
       })
 
-      function sendMsg() {
+      function getMsg() {
         //socket.emit("message", {name: 'uff', text: document.getElementById("msgInput").value});
-        socket.emit('subscribe', {name: 'lala', id: 'sd'});
+        socket.emit('subscribe', {name: document.getElementById("msgInput").value, id: 'sd'});
+      }
+      function sendMsg() {
+        socket.emit("send-message", {user: {name: 'Rafael', password: 'sda'},
+          message: {name: 'uff', text: "+++d+sd+s"},
+         group: {name: document.getElementById("msgInput").value, id: 'sd'}});
       }
     </script>
   </body>

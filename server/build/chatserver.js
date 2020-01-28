@@ -9,14 +9,12 @@ var socket_io_1 = __importDefault(require("socket.io"));
 var cors_1 = __importDefault(require("cors"));
 var ChatServer = /** @class */ (function () {
     function ChatServer() {
-        //clientside: changeGroupMethod un-/subscribe im CLient
-        this.currentGroup = "";
         this.createApp();
         this.config();
         this.createServer();
         this.sockets();
         var corsOptions = {
-            origin: '*',
+            origin: '*:*',
             optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
         };
         this.app.use(cors_1.default(corsOptions));
@@ -81,11 +79,12 @@ var ChatServer = /** @class */ (function () {
             });
             client.on('send-message', function (obj) {
                 _this.io.in(obj.group.name).emit('new-message', obj.message);
+                console.log(obj.group.name);
                 console.log('** server **: message was sent');
             });
             client.on('login', function (user, call) {
                 //databases
-                console.log('** server **: user: ' + JSON.stringify(user) + ' loged in');
+                console.log('** server **: user: ' + JSON.stringify(user) + ' logged in');
                 call(true);
             });
             client.on('subscribe', function (grp) {

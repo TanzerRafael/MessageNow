@@ -15,8 +15,6 @@ export class ChatServer {
     private io!: SocketIO.Server;
     private port!: string | number;
 
-    //clientside: changeGroupMethod un-/subscribe im CLient
-    private currentGroup = "";
 
     constructor() {
         this.createApp();
@@ -25,7 +23,7 @@ export class ChatServer {
         this.sockets();
 
         let corsOptions = {
-            origin: '*',
+            origin: '*:*',
             optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
           }
 
@@ -103,12 +101,13 @@ export class ChatServer {
 
             client.on('send-message', (obj: any) => {
                 this.io.in(obj.group.name).emit('new-message', obj.message);
+                console.log(obj.group.name);
                 console.log('** server **: message was sent');
             });
 
             client.on('login', (user: User, call: Function) => {
                 //databases
-                console.log('** server **: user: ' + JSON.stringify(user) + ' loged in');
+                console.log('** server **: user: ' + JSON.stringify(user) + ' logged in');
                 call(true);
             });
 
