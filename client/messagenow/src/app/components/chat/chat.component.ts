@@ -20,6 +20,11 @@ export class ChatComponent implements OnInit {
   @Input() group = '';
   @Input() user: User;
   messages: Message[] = [];
+  currentMessage: Message = {
+    name: '',
+    text: '',
+    imageLink: ''
+  };
 
   constructor(private dataProvider: MemoryDataProvider) {
     // this.dataProvider.addNewMessageListener(data => this.addNewMessage(data));
@@ -43,6 +48,12 @@ export class ChatComponent implements OnInit {
       imageLink: useImage ? link1 : ''
     };
 
+    this.messages.push(message);
+    this.dataProvider.sendMessage(this.user, message);
+  }
+
+  createMessage(message: Message) {
+    message.name = this.user.name;
     this.messages.push(message);
     this.dataProvider.sendMessage(this.user, message);
   }
