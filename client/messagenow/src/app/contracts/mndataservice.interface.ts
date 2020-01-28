@@ -5,7 +5,9 @@ import { Group } from '../models/group.model';
 export interface IMnDataService {
   login(user: User): boolean;
   logout(user: User): void;
-  getGroups(user: User): string[];
+  getGroups(user: User): Group[];
   sendMessage(user: User, message: Message, group: Group): void;
-  getMessagesOfGroup(group: string): Message[];
+  getMessagesOfGroup(group: Group): Message[];
+  joinGroup(group: Group): void;
+  leaveGroup(group: Group): void;
 }

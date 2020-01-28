@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MemoryDataProvider} from '../../services/memorydataprovider.service';
 import {User} from '../../models/user.model';
+import {Group} from '../../models/group.model';
+import {SocketDataProviderService} from '../../services/socketdataprovider.service';
 
 @Component({
   selector: 'app-selectgroup',
@@ -9,11 +11,11 @@ import {User} from '../../models/user.model';
 })
 export class SelectgroupComponent implements OnInit {
   @Input() user: User;
-  @Output() chosen: EventEmitter<string> = new EventEmitter<string>();
+  @Output() chosen: EventEmitter<Group> = new EventEmitter<Group>();
   @Output() logout: EventEmitter<any> = new EventEmitter<any>();
-  private groups: string[];
+  private groups: Group[];
 
-  constructor(private dataProvider: MemoryDataProvider) {
+  constructor(private dataProvider: SocketDataProviderService) {
 
   }
 
@@ -21,11 +23,11 @@ export class SelectgroupComponent implements OnInit {
     this.groups = this.dataProvider.getGroups(this.user);
   }
 
-  getAvailableGroups(): string[] {
+  getAvailableGroups(): Group[] {
     return this.groups;
   }
 
-  onClick(group: string) {
+  onClick(group: Group) {
     this.chosen.emit(group);
   }
 

@@ -4,6 +4,7 @@ import {IMnDataService} from '../contracts/mndataservice.interface';
 import {User} from '../models/user.model';
 import {Message} from '../models/message.model';
 import { Group } from '../models/group.model';
+import {MnSocket} from './mnsocket.service';
 
 declare type MessageListener = (data: any) => void;
 
@@ -11,7 +12,7 @@ declare type MessageListener = (data: any) => void;
   providedIn: 'root'
 })
 export class SocketDataProviderService implements IMnDataService {
-  private groups: string[] = null;
+  private groups: Group[] = null;
   private messageListener: MessageListener[] = [];
 
   constructor(private socket: Socket) {
@@ -21,7 +22,7 @@ export class SocketDataProviderService implements IMnDataService {
     });
   }
 
-  getGroups(user: User): string[] {
+  getGroups(user: User): Group[] {
     if (this.groups === null) {
       this.socket.emit('get-groups', user, data => this.groups = data);
     }
@@ -29,7 +30,15 @@ export class SocketDataProviderService implements IMnDataService {
     return this.groups;
   }
 
-  getMessagesOfGroup(group: string): Message[] {
+  joinGroup(group: Group): void {
+    this.socket.emit('subscribe', group);
+  }
+
+  leaveGroup(group: Group): void {
+    this.socket.emit('unsubscribe', group);
+  }
+
+  getMessagesOfGroup(group: Group): Message[] {
     let messages: Message[] = [];
     this.socket.emit('get-messages', group, data => messages = data);
     return messages;
@@ -40,8 +49,9 @@ export class SocketDataProviderService implements IMnDataService {
   }
 
   login(user: User): boolean {
-    let isUser = false;
+    let isUser = true;
     this.socket.emit('login', user, valid => isUser = valid);
+    console.log('isUser: ' + isUser);
     return isUser;
   }
 

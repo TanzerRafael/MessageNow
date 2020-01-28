@@ -9,6 +9,7 @@ import {Message} from '../../models/message.model';
 import {User} from '../../models/user.model';
 import {MemoryDataProvider} from '../../services/memorydataprovider.service';
 import {SocketDataProviderService} from '../../services/socketdataprovider.service';
+import {Group} from '../../models/group.model';
 
 @Component({
   selector: 'app-chat',
@@ -17,7 +18,7 @@ import {SocketDataProviderService} from '../../services/socketdataprovider.servi
 })
 export class ChatComponent implements OnInit {
   @Output() chooseGroup: EventEmitter<any> = new EventEmitter<any>();
-  @Input() group = '';
+  @Input() group: Group;
   @Input() user: User;
   messages: Message[] = [];
   currentMessage: Message = {
@@ -26,8 +27,8 @@ export class ChatComponent implements OnInit {
     imageLink: ''
   };
 
-  constructor(private dataProvider: MemoryDataProvider) {
-    // this.dataProvider.addNewMessageListener(data => this.addNewMessage(data));
+  constructor(private dataProvider: SocketDataProviderService) {
+    this.dataProvider.addNewMessageListener(data => this.createMessage(data));
   }
 
   ngOnInit() {
@@ -49,12 +50,12 @@ export class ChatComponent implements OnInit {
     };
 
     this.messages.push(message);
-    this.dataProvider.sendMessage(this.user, message);
+    this.dataProvider.sendMessage(this.user, message, this.group);
   }
 
   createMessage(message: Message) {
     message.name = this.user.name;
     this.messages.push(message);
-    this.dataProvider.sendMessage(this.user, message);
+    this.dataProvider.sendMessage(this.user, message, this.group);
   }
 }

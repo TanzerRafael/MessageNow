@@ -19,6 +19,8 @@ import { MessageComponent } from './components/message/message.component';
 import {MemoryDataProvider} from './services/memorydataprovider.service';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import { CreateMessageComponent } from './components/createmessage/createmessage.component';
+import {MnSocket} from './services/mnsocket.service';
+import {SocketDataProviderService} from './services/socketdataprovider.service';
 
 const socketConfig: SocketIoConfig = { url: 'localhost:3000', options: {} };
 
@@ -41,9 +43,10 @@ const socketConfig: SocketIoConfig = { url: 'localhost:3000', options: {} };
         MatSlideToggleModule,
         MatToolbarModule,
         MatInputModule,
-        // SocketIoModule.forRoot(socketConfig)
+        SocketIoModule.forRoot(socketConfig)
+        // SocketIoModule
     ],
-  providers: [MemoryDataProvider],
+  providers: [MemoryDataProvider, SocketDataProviderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

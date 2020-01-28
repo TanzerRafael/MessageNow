@@ -2,6 +2,8 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {State} from './models/state.enum';
 import {User} from './models/user.model';
 import {MemoryDataProvider} from './services/memorydataprovider.service';
+import {Group} from './models/group.model';
+import {SocketDataProviderService} from './services/socketdataprovider.service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +14,13 @@ import {MemoryDataProvider} from './services/memorydataprovider.service';
 export class AppComponent implements OnInit {
   title = 'messagenow';
   private state: State = State.Login;
-  selectedGroup = '';
+  selectedGroup: Group = null;
   color = 'warn';
   darkMode = false;
   private bodyElement;
   private user: User = null;
 
-  constructor(private dataProvider: MemoryDataProvider) {
+  constructor(private dataProvider: SocketDataProviderService) {
   }
 
   ngOnInit(): void {
@@ -73,18 +75,22 @@ export class AppComponent implements OnInit {
     }
   }
 
-  startChat(group: string) {
+  startChat(group: Group) {
     this.state = State.Chat;
     this.selectedGroup = group;
+    this.dataProvider.joinGroup(this.selectedGroup);
   }
 
   chooseGroup() {
     this.state = State.GroupChoosing;
+    if (this.selectedGroup !== null) {
+      this.dataProvider.leaveGroup(this.selectedGroup);
+    }
   }
 
   logoutUser() {
     this.dataProvider.logout(this.user);
-    this.selectedGroup = '';
+    this.selectedGroup = null;
     this.state = State.Login;
   }
 
@@ -100,6 +106,6 @@ export class AppComponent implements OnInit {
 
   onLogout() {
     this.state = State.Login;
-    this.selectedGroup = '';
+    this.selectedGroup = null;
   }
 }

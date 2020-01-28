@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { IMnDataService } from '../contracts/mndataservice.interface';
 import { User } from '../models/user.model';
 import { Message } from '../models/message.model';
+import {Group} from '../models/group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,17 @@ export class MemoryDataProvider implements IMnDataService {
 
   constructor() { }
 
-  getGroups(user: User): string[] {
+  getGroups(user: User): Group[] {
     return [
-      'Schule', 'Familie', 'Privat', 'Bafi', 'Koppler'
+      { name: 'Schule' },
+      { name: 'Familie' },
+      { name: 'Privat' },
+      { name: 'Bafi' },
+      { name: 'Koppler' }
     ];
   }
 
-  getMessagesOfGroup(group: string): Message[] {
+  getMessagesOfGroup(group: Group): Message[] {
     return [
       {
         name: 'thelegend27',
@@ -27,7 +32,7 @@ export class MemoryDataProvider implements IMnDataService {
     ];
   }
 
-  sendMessage(user: User, message: Message): void {
+  sendMessage(user: User, message: Message, group: Group): void {
   }
 
   login(user: User): boolean {
@@ -35,5 +40,11 @@ export class MemoryDataProvider implements IMnDataService {
   }
 
   logout(user: User): void {
+  }
+
+  joinGroup(group: Group): void {
+  }
+
+  leaveGroup(group: Group): void {
   }
 }

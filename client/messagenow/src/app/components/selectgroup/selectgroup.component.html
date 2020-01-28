@@ -3,7 +3,7 @@
   <mat-list >
     <div class="group-list">
         <ng-container *ngFor="let group of getAvailableGroups()">
-          <mat-list-item (click)="onClick(group)">{{group}}</mat-list-item>
+          <mat-list-item (click)="onClick(group)">{{group.name}}</mat-list-item>
           <mat-divider></mat-divider>
         </ng-container>
     </div>

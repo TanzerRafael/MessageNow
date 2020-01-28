@@ -1,4 +1,3 @@
 export interface Group {
-    name: String,
-    id: String
+    name: string;
 }
