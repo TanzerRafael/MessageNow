@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    MatCardModule,
-    MatInputModule,
-    MatListModule,
-    MatProgressBarModule,
-    MatSlideToggleModule,
-    MatToolbarModule
+  MatButtonModule,
+  MatCardModule, MatIconModule,
+  MatInputModule,
+  MatListModule, MatMenuModule,
+  MatProgressBarModule,
+  MatSlideToggleModule,
+  MatToolbarModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -29,17 +30,20 @@ import {SocketDataProviderService} from './services/socketdataprovider.service';
     MessageComponent,
     CreateMessageComponent
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        MatProgressBarModule,
-        MatListModule,
-        MatCardModule,
-        MatSlideToggleModule,
-        MatToolbarModule,
-        MatInputModule,
-    ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatProgressBarModule,
+    MatListModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
   providers: [MemoryDataProvider, SocketDataProviderService],
   bootstrap: [AppComponent]
 })

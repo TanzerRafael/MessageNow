@@ -70,7 +70,8 @@ body {
 }
 
 .mn-button {
-  background: var(--color-background-primary);
+  /*background: var(--color-background-primary);*/
+  background: transparent;
   display: block;
   margin: 20px auto;
   padding: 14px 40px;
