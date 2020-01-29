@@ -7,6 +7,7 @@ import cors from 'cors';
 import { Message } from './models/messagemodel';
 import {User} from './models/user';
 import {Group} from './models/groupmodel';
+import {app} from './mongo/app';
 
 export class ChatServer {
     public static readonly PORT:number = 3030;
