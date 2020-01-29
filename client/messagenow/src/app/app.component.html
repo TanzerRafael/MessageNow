@@ -3,7 +3,7 @@
     <span>{{ title }}</span>
     <span style="flex: 1 1 auto;"></span>
     <mat-slide-toggle (change)="switchTheme()" [color]="color" [(ngModel)]="darkMode"></mat-slide-toggle>
-    <button class="mn-button" (click)="onLogout()" *ngIf="getState() !== 'LOGIN'">Logout</button>
+    <button class="mn-button" (click)="logoutUser()" *ngIf="getState() !== 'LOGIN'">Logout</button>
   </mat-toolbar>
   <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
 </nav>

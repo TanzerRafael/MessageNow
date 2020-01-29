@@ -67,20 +67,23 @@ var ChatServer = /** @class */ (function () {
             client.on('disconnect', function (user) {
                 console.log('Client disconnected');
             });
+            client.on('logout', function (user) {
+                console.log('** server **: logged out user ' + user);
+            });
             client.on('get-groups', function (user, call) {
                 //database
                 console.log('** server **: send groups');
-                call({ name: 'grp1' });
+                call([{ name: 'grp1' }, { name: 'grp2' }]);
             });
             client.on('get-messages', function (group, call) {
                 //database
                 console.log('** server **: send messages');
-                call({ name: 'dude', text: 'deiser deise', link: '' });
+                call([{ name: 'dude', text: 'deiser deise', imageLink: '' }]);
             });
             client.on('send-message', function (obj) {
                 _this.io.in(obj.group.name).emit('new-message', obj.message);
-                console.log(obj.group.name);
-                console.log('** server **: message was sent');
+                //this.io.in(obj.group.name)
+                console.log('** server **: message was sent in group ' + obj.group.name);
             });
             client.on('login', function (user, call) {
                 //databases
@@ -107,7 +110,7 @@ var ChatServer = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ChatServer.PORT = 3000;
+    ChatServer.PORT = 3030;
     return ChatServer;
 }());
 exports.ChatServer = ChatServer;

@@ -9,7 +9,7 @@ import {User} from './models/user';
 import {Group} from './models/groupmodel';
 
 export class ChatServer {
-    public static readonly PORT:number = 3000;
+    public static readonly PORT:number = 3030;
     private app!: express.Application;
     private server!: Server;
     private io!: SocketIO.Server;
@@ -87,22 +87,26 @@ export class ChatServer {
                 console.log('Client disconnected');
             });
 
-            client.on('get-groups', (user: User, call: (data: any) => Group[]) => {
+            client.on('logout', (user: User) => {
+                console.log('** server **: logged out user ' + user);
+            });
+
+            client.on('get-groups', (user: User, call: Function) => {
                 //database
                 console.log('** server **: send groups');
-                call({name: 'grp1'});
+                call([{name: 'grp1'}, {name: 'grp2'}]);
             });
 
             client.on('get-messages', (group: Group, call: Function) => {
                 //database
                 console.log('** server **: send messages');
-                call({name: 'dude', text: 'deiser deise', link: ''});
+                call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
             });
 
             client.on('send-message', (obj: any) => {
                 this.io.in(obj.group.name).emit('new-message', obj.message);
-                console.log(obj.group.name);
-                console.log('** server **: message was sent');
+                //this.io.in(obj.group.name)
+                console.log('** server **: message was sent in group ' + obj.group.name);
             });
 
             client.on('login', (user: User, call: Function) => {

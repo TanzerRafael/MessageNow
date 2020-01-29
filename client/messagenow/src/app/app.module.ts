@@ -17,12 +17,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { SelectgroupComponent } from './components/selectgroup/selectgroup.component';
 import { MessageComponent } from './components/message/message.component';
 import {MemoryDataProvider} from './services/memorydataprovider.service';
-import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import { CreateMessageComponent } from './components/createmessage/createmessage.component';
-import {MnSocket} from './services/mnsocket.service';
 import {SocketDataProviderService} from './services/socketdataprovider.service';
-
-const socketConfig: SocketIoConfig = { url: 'localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -43,8 +39,6 @@ const socketConfig: SocketIoConfig = { url: 'localhost:3000', options: {} };
         MatSlideToggleModule,
         MatToolbarModule,
         MatInputModule,
-        SocketIoModule.forRoot(socketConfig)
-        // SocketIoModule
     ],
   providers: [MemoryDataProvider, SocketDataProviderService],
   bootstrap: [AppComponent]

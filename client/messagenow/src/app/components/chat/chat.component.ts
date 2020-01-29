@@ -28,11 +28,13 @@ export class ChatComponent implements OnInit {
   };
 
   constructor(private dataProvider: SocketDataProviderService) {
-    this.dataProvider.addNewMessageListener(data => this.createMessage(data));
+    this.dataProvider.addNewMessageListener(data => this.messages.push(data));
   }
 
   ngOnInit() {
-    this.messages = this.dataProvider.getMessagesOfGroup(this.group);
+    this.dataProvider.getMessagesOfGroup(this.group).subscribe((data: Message[]) => {
+      this.messages = data;
+    });
   }
 
   onChooseNewGroup() {
@@ -55,7 +57,6 @@ export class ChatComponent implements OnInit {
 
   createMessage(message: Message) {
     message.name = this.user.name;
-    this.messages.push(message);
     this.dataProvider.sendMessage(this.user, message, this.group);
   }
 }

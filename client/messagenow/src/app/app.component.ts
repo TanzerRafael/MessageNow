@@ -64,15 +64,14 @@ export class AppComponent implements OnInit {
   }
 
   loginUser(user: User) {
-    console.log('user: ' + user + ' loginned');
-    const result: boolean = this.dataProvider.login(user);
-
-    if (result) {
-      this.user = user;
-      this.chooseGroup();
-    } else {
-      alert('user not found');
-    }
+    this.dataProvider.login(user).subscribe((isValid: boolean) => {
+      if (isValid) {
+        this.user = user;
+        this.chooseGroup();
+      } else {
+        alert('user not found');
+      }
+    });
   }
 
   startChat(group: Group) {

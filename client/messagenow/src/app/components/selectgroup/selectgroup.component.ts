@@ -20,7 +20,12 @@ export class SelectgroupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.groups = this.dataProvider.getGroups(this.user);
+    console.log('before');
+    this.dataProvider.getGroups(this.user).subscribe(data => {
+      console.log(data);
+      this.groups = data;
+    });
+    console.log('after');
   }
 
   getAvailableGroups(): Group[] {
