@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       this.darkMode = true;
     }
-    this.switchTheme();
+    this.switchTheme(false);
   }
 
   getState(): State {
@@ -93,7 +93,11 @@ export class AppComponent implements OnInit {
     this.state = State.Login;
   }
 
-  switchTheme() {
+  switchTheme(changeField: boolean = true) {
+    if (changeField) {
+      this.darkMode = !this.darkMode;
+    }
+
     if (this.darkMode) {
       this.bodyElement.classList.remove('mn-light-theme');
       this.bodyElement.classList.add('mn-dark-theme');

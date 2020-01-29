@@ -14,4 +14,8 @@ export class MessageComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  getMessageText(): string {
+    return this.message.text.replace('\n', ' <br/> ');
+  }
 }

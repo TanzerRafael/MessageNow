@@ -5,11 +5,12 @@
     <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
   </mat-card-header>
   <!-- src="https://material.angular.io/assets/img/examples/shiba2.jpg" -->
-  <img mat-card-image [src]="message.imageLink" alt="Message image"
+  <img mat-card-image [src]="message.imageLink" alt="Image not loadable"
        *ngIf="message.imageLink !== ''" />
   <mat-card-content>
     <p>
       {{ message.text }}
+      <!--{{ getMessageText() }}-->
     </p>
   </mat-card-content>
   <!--<mat-card-actions>
