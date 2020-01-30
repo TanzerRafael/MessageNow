@@ -2,22 +2,37 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var http_1 = require("http");
 var express_1 = __importDefault(require("express"));
 var socket_io_1 = __importDefault(require("socket.io"));
 var cors_1 = __importDefault(require("cors"));
+var bodyParser = __importStar(require("body-parser"));
+var dbController = __importStar(require("./mongo/controller"));
+var connector_1 = require("./mongo/connector");
 var ChatServer = /** @class */ (function () {
     function ChatServer() {
         this.createApp();
         this.config();
         this.createServer();
         this.sockets();
+        this.app.use(bodyParser.json);
         var corsOptions = {
             origin: '*:*',
             optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
         };
         this.app.use(cors_1.default(corsOptions));
+        this.connector = new connector_1.MongoHelper();
+        this.connector.ConnectToDb();
+        //new InitDatabase();
+        this.connector.DisconnectFromDb(); //?
         this.listen();
     }
     ChatServer.prototype.createApp = function () {
@@ -72,13 +87,27 @@ var ChatServer = /** @class */ (function () {
             });
             client.on('get-groups', function (user, call) {
                 //database
+                var grps;
+                dbController.getGroups(user.name)
+                    .then(function (value) {
+                    var _a;
+                    grps = (_a = value) === null || _a === void 0 ? void 0 : _a.map(function (e) { return ({ name: e.name }); });
+                });
                 console.log('** server **: send groups');
-                call([{ name: 'grp1' }, { name: 'grp2' }]);
+                //call([{name: 'grp1'}, {name: 'grp2'}]);
+                call(grps);
             });
             client.on('get-messages', function (group, call) {
                 //database
+                var msgs;
+                dbController.getMessages(group.name)
+                    .then(function (value) {
+                    var _a;
+                    msgs = (_a = value) === null || _a === void 0 ? void 0 : _a.map(function (e) { return ({ name: e.name, text: e.text, imageLink: e.imageLink }); });
+                });
                 console.log('** server **: send messages');
-                call([{ name: 'dude', text: 'deiser deise', imageLink: '' }]);
+                //call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
+                call(msgs);
             });
             client.on('send-message', function (obj) {
                 _this.io.in(obj.group.name).emit('new-message', obj.message);
@@ -86,9 +115,13 @@ var ChatServer = /** @class */ (function () {
                 console.log('** server **: message was sent in group ' + obj.group.name);
             });
             client.on('login', function (user, call) {
-                //databases
+                var dbUser = dbController.getUser(user.name, user.password);
+                var isUser = false;
+                if (dbUser != null) {
+                    isUser = true;
+                }
                 console.log('** server **: user: ' + JSON.stringify(user) + ' logged in');
-                call(true);
+                call(isUser);
             });
             client.on('subscribe', function (grp) {
                 client.join(grp.name);

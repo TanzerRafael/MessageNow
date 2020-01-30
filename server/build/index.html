@@ -30,7 +30,8 @@
 
       function getMsg() {
         //socket.emit("message", {name: 'uff', text: document.getElementById("msgInput").value});
-        socket.emit('subscribe', {name: document.getElementById("msgInput").value, id: 'sd'});
+        //socket.emit('subscribe', {name: document.getElementById("msgInput").value, id: 'sd'});
+        socket.emit('login', {name: "rafa", password: "12345678"}, data => console.log(data));
       }
       function sendMsg() {
         socket.emit("send-message", {user: {name: 'Rafael', password: 'sda'},
