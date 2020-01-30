@@ -1,13 +1,18 @@
 .chat-box {
   width: 70%;
+  min-width: 450px;
+  max-height: 750px;
+  overflow-y: scroll;
 }
 
 .flex-wrapper {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .chat-room {
-  width: 90%;
+  width: 60%;
+  min-width: 420px;
   height: 550px;
   margin-left: 1em;
 

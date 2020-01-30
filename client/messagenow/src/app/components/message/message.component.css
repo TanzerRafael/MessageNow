@@ -8,3 +8,8 @@
   background-color: var(--color-message);
   color: var(--color-text-primary);
 }
+
+.message img::before {
+  color: red;
+  padding-left: 10px;
+}
