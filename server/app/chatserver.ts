@@ -38,7 +38,7 @@ export class ChatServer {
 
         this.connector = new MongoHelper();
         this.connector.ConnectToDb();
-        //new InitDatabase();
+        // new InitDatabase();
         this.connector.DisconnectFromDb();//?
 
         this.listen();
@@ -127,9 +127,12 @@ export class ChatServer {
             });
 
             client.on('send-message', (obj: any) => {
-                this.io.in(obj.group.name).emit('new-message', obj.message);
                 //this.io.in(obj.group.name)
-                console.log('** server **: message was sent in group ' + obj.group.name);
+                dbController.storeMessage(obj.user.name, obj.message.text, obj.message.imageLink, obj.group.name)
+                    .then((value) => {
+                        this.io.in(obj.group.name).emit('new-message', obj.message);
+                        console.log('** server **: message was sent in group ' + obj.group.name);
+                    });
             });
 
             client.on('login', (user: User, call: Function) => {

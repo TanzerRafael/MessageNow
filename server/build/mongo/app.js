@@ -2,7 +2,6 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-
 Object.defineProperty(exports, "__esModule", { value: true });
 var groupmodel_1 = __importDefault(require("../models/groupmodel"));
 var user_1 = __importDefault(require("../models/user"));
@@ -16,7 +15,7 @@ var InitDatabase = /** @class */ (function () {
     }
     InitDatabase.prototype.initialize = function () {
         var group1 = new groupmodel_1.default({
-            name: "nachts vor dem PC",
+            name: "Nachts vor dem PC",
             messages: [{ name: "Legend42o", text: "look at this!!", imageLinke: "https://previews.123rf.com/images/anatolymas/anatolymas1607/anatolymas160700007/62128577-3d-small-person-standing-in-sad-pose-next-to-the-word-no-3d-image-white-background-.jpg" }],
             users: ["Legend42o", "SisOne"]
         });
@@ -26,7 +25,7 @@ var InitDatabase = /** @class */ (function () {
             users: ["Legend42o", "Zetta"]
         });
         var user1 = new user_1.default({
-            name: "legend42o",
+            name: "Legend42o",
             password: "6969",
             groups: ["Nachts vor dem PC", "Lorem ipsum"]
         });
@@ -77,19 +76,3 @@ var InitDatabase = /** @class */ (function () {
     return InitDatabase;
 }());
 exports.InitDatabase = InitDatabase;
-=======
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var bodyparser = __importStar(require("body-parser"));
-var request_logger_middleware_1 = require("./request.logger.middleware");
-var app = express_1.default();
-exports.app = app;
-app.use(bodyparser.json());
-app.use(request_logger_middleware_1.requestLoggerMiddleware);

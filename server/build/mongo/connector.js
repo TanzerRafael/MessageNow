@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
 var MongoHelper = /** @class */ (function () {
     function MongoHelper() {
-        this.uri = 'mongodb://127.0.0.1:27017/messagenow';
+        // private uri: string = 'mongodb://127.0.0.1:27017/messagenow';
+        this.uri = 'mongodb://192.168.99.100:27017';
     }
     /**
      * ConnectToDb

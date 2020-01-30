@@ -32,3 +32,14 @@ export let getUser = async (userName: String, password: String) => {
         console.log(err);
     }
 }
+
+export let storeMessage = async (userName: string, text: String, imageLink: String, group: String) => {
+    console.log("Controller: store message");
+    try {
+        return await MsgDB.insertMany([
+            { name: userName, text: text, imageLink: imageLink, group: group }
+        ]);
+    } catch(err) {
+        console.log(err);
+    }
+}

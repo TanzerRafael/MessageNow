@@ -57,7 +57,7 @@ exports.getGroups = function (userName) { return __awaiter(void 0, void 0, void 
                 console.log(err_1);
                 return [3 /*break*/, 3];
             case 3:
-                console.log(grps + "Gruppen auf " + userName);
+                console.log("Database[getGroups]: " + grps + "Gruppen auf " + userName);
                 return [2 /*return*/, grps];
         }
     });
@@ -77,28 +77,48 @@ exports.getMessages = function (grpName) { return __awaiter(void 0, void 0, void
                 console.log(err_2);
                 return [3 /*break*/, 3];
             case 3:
-                console.log(msgs + "Nachrichte auf " + grpName);
+                console.log("Database[getMessages]: " + msgs + "Nachrichte auf " + grpName);
                 return [2 /*return*/, msgs];
         }
     });
 }); };
 exports.getUser = function (userName, password) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, err_3;
+    var err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, user_1.default.findOne({ group: userName, password: password })];
+                console.log("Controller: User::" + userName + password);
+                _a.label = 1;
             case 1:
-                user = _a.sent();
-                return [3 /*break*/, 3];
-            case 2:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, user_1.default.findOne({ name: userName, password: password })];
+            case 2: return [2 /*return*/, _a.sent()];
+            case 3:
                 err_3 = _a.sent();
                 console.log(err_3);
-                return [3 /*break*/, 3];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.storeMessage = function (userName, text, imageLink, group) { return __awaiter(void 0, void 0, void 0, function () {
+    var err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("Controller: store message");
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, messagemodel_1.default.insertMany([
+                        { name: userName, text: text, imageLink: imageLink, group: group }
+                    ])];
+            case 2: return [2 /*return*/, _a.sent()];
             case 3:
-                console.log(user + " auf " + password);
-                return [2 /*return*/, user];
+                err_4 = _a.sent();
+                console.log(err_4);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };

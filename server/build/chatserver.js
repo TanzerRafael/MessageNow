@@ -31,7 +31,7 @@ var ChatServer = /** @class */ (function () {
         this.app.use(cors_1.default(corsOptions));
         this.connector = new connector_1.MongoHelper();
         this.connector.ConnectToDb();
-        //new InitDatabase();
+        // new InitDatabase();
         this.connector.DisconnectFromDb(); //?
         this.listen();
     }
@@ -87,41 +87,44 @@ var ChatServer = /** @class */ (function () {
             });
             client.on('get-groups', function (user, call) {
                 //database
-                var grps;
                 dbController.getGroups(user.name)
                     .then(function (value) {
                     var _a;
-                    grps = (_a = value) === null || _a === void 0 ? void 0 : _a.map(function (e) { return ({ name: e.name }); });
+                    var grps = (_a = value) === null || _a === void 0 ? void 0 : _a.map(function (e) { return ({ name: e.name }); });
+                    console.log('** server **: send groups' + JSON.stringify(grps) + "  " + typeof (grps));
+                    //call([{name: 'grp1'}, {name: 'grp2'}]);
+                    call(grps);
                 });
-                console.log('** server **: send groups');
-                //call([{name: 'grp1'}, {name: 'grp2'}]);
-                call(grps);
             });
             client.on('get-messages', function (group, call) {
                 //database
-                var msgs;
                 dbController.getMessages(group.name)
                     .then(function (value) {
                     var _a;
-                    msgs = (_a = value) === null || _a === void 0 ? void 0 : _a.map(function (e) { return ({ name: e.name, text: e.text, imageLink: e.imageLink }); });
+                    var msgs = (_a = value) === null || _a === void 0 ? void 0 : _a.map(function (e) { return ({ name: e.name, text: e.text, imageLink: e.imageLink }); });
+                    console.log('** server **: send messages' + msgs);
+                    //call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
+                    call(msgs);
                 });
-                console.log('** server **: send messages');
-                //call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
-                call(msgs);
             });
             client.on('send-message', function (obj) {
-                _this.io.in(obj.group.name).emit('new-message', obj.message);
                 //this.io.in(obj.group.name)
-                console.log('** server **: message was sent in group ' + obj.group.name);
+                dbController.storeMessage(obj.user.name, obj.message.text, obj.message.imageLink, obj.group.name)
+                    .then(function (value) {
+                    _this.io.in(obj.group.name).emit('new-message', obj.message);
+                    console.log('** server **: message was sent in group ' + obj.group.name);
+                });
             });
             client.on('login', function (user, call) {
-                var dbUser = dbController.getUser(user.name, user.password);
-                var isUser = false;
-                if (dbUser != null) {
-                    isUser = true;
-                }
-                console.log('** server **: user: ' + JSON.stringify(user) + ' logged in');
-                call(isUser);
+                dbController.getUser(user.name, user.password).then(function (value) {
+                    console.log("chatserver: login[]: " + JSON.stringify(value));
+                    var isUser = false;
+                    if (value != null) {
+                        isUser = true;
+                    }
+                    console.log('** server **: user: ' + JSON.stringify(user) + ' logged in ?' + isUser);
+                    call(isUser);
+                });
             });
             client.on('subscribe', function (grp) {
                 client.join(grp.name);
