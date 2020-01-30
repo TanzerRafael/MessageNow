@@ -105,27 +105,25 @@ export class ChatServer {
 
             client.on('get-groups', (user: User, call: Function) => {
                 //database
-                let grps;
                 dbController.getGroups(user.name)
                 .then((value) => {
-                    grps = value?.map( e => ({name: e.name}));
+                    let grps = value?.map( e => ({name: e.name}));
+                    console.log('** server **: send groups'+ JSON.stringify(grps) + "  " + typeof(grps) );
+                    //call([{name: 'grp1'}, {name: 'grp2'}]);
+                    call(grps);
                 });
-                console.log('** server **: send groups');
-                //call([{name: 'grp1'}, {name: 'grp2'}]);
-                call(grps);
+                
             });
 
             client.on('get-messages', (group: Group, call: Function) => {
                 //database
-                let msgs;
                 dbController.getMessages(group.name)
                 .then((value) => {
-                    msgs = value?.map( e => ({name: e.name, text: e.text, imageLink: e.imageLink}));
+                    let msgs = value?.map( e => ({name: e.name, text: e.text, imageLink: e.imageLink}));
+                    console.log('** server **: send messages' + msgs);
+                    //call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
+                    call(msgs);
                 });
-
-                console.log('** server **: send messages');
-                //call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
-                call(msgs);
             });
 
             client.on('send-message', (obj: any) => {
@@ -135,13 +133,15 @@ export class ChatServer {
             });
 
             client.on('login', (user: User, call: Function) => {
-                let dbUser = dbController.getUser(user.name, user.password);
+                dbController.getUser(user.name, user.password).then( (value) => {
+                    console.log("chatserver: login[]: " + JSON.stringify(value));
                 let isUser = false;
-                if(dbUser != null){
+                if(value != null){
                     isUser = true;
                 }
-                console.log('** server **: user: ' + JSON.stringify(user) + ' logged in');
+                console.log('** server **: user: ' + JSON.stringify(user) + ' logged in ?'+ isUser);
                 call(isUser);
+                });
             });
 
             client.on('subscribe', (grp: Group) => {

@@ -9,7 +9,7 @@ export let getGroups = async (userName: String) => {
     }catch(err){
         console.log(err);
     }
-    console.log(grps + "Gruppen auf " + userName);
+    console.log("Database[getGroups]: " + grps + "Gruppen auf " + userName);
     return grps;
 }
 
@@ -20,17 +20,15 @@ export let getMessages = async (grpName: String) => {
     }catch(err){
         console.log(err);
     }
-    console.log(msgs + "Nachrichte auf " + grpName);
+    console.log("Database[getMessages]: " + msgs + "Nachrichte auf " + grpName);
     return msgs;
 }
 
 export let getUser = async (userName: String, password: String) => {
-    let user;
+    console.log("Controller: User::" + userName + password);
     try{
-        user = await UserDB.findOne({ group: userName, password: password });
+        return await UserDB.findOne({ name: userName, password: password });
     }catch(err){
         console.log(err);
     }
-    console.log(user + " auf " + password);
-    return user;
 }
