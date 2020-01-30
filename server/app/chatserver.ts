@@ -4,10 +4,13 @@ import express from 'express';
 import socketIo, { Socket } from 'socket.io';
 import cors from 'cors';
 
-import { Message } from './models/messagemodel';
+import { Message, MsgSchema } from './models/messagemodel';
 import {User} from './models/user';
 import {Group} from './models/groupmodel';
-import {app} from './mongo/app';
+import * as bodyParser from 'body-parser';
+import * as dbController from './mongo/controller';
+import {InitDatabase} from './mongo/app';
+import {MongoHelper} from './mongo/connector';
 
 export class ChatServer {
     public static readonly PORT:number = 3030;
@@ -15,6 +18,7 @@ export class ChatServer {
     private server!: Server;
     private io!: SocketIO.Server;
     private port!: string | number;
+    private connector!: MongoHelper;
 
 
     constructor() {
@@ -23,12 +27,19 @@ export class ChatServer {
         this.createServer();
         this.sockets();
 
+        this.app.use(bodyParser.json);
+
         let corsOptions = {
             origin: '*:*',
             optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
           }
 
         this.app.use(cors(corsOptions));
+
+        this.connector = new MongoHelper();
+        this.connector.ConnectToDb();
+        //new InitDatabase();
+        this.connector.DisconnectFromDb();//?
 
         this.listen();
     }
@@ -94,14 +105,27 @@ export class ChatServer {
 
             client.on('get-groups', (user: User, call: Function) => {
                 //database
+                let grps;
+                dbController.getGroups(user.name)
+                .then((value) => {
+                    grps = value?.map( e => ({name: e.name}));
+                });
                 console.log('** server **: send groups');
-                call([{name: 'grp1'}, {name: 'grp2'}]);
+                //call([{name: 'grp1'}, {name: 'grp2'}]);
+                call(grps);
             });
 
             client.on('get-messages', (group: Group, call: Function) => {
                 //database
+                let msgs;
+                dbController.getMessages(group.name)
+                .then((value) => {
+                    msgs = value?.map( e => ({name: e.name, text: e.text, imageLink: e.imageLink}));
+                });
+
                 console.log('** server **: send messages');
-                call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
+                //call([{name: 'dude', text: 'deiser deise', imageLink: ''}]);
+                call(msgs);
             });
 
             client.on('send-message', (obj: any) => {
@@ -111,9 +135,13 @@ export class ChatServer {
             });
 
             client.on('login', (user: User, call: Function) => {
-                //databases
+                let dbUser = dbController.getUser(user.name, user.password);
+                let isUser = false;
+                if(dbUser != null){
+                    isUser = true;
+                }
                 console.log('** server **: user: ' + JSON.stringify(user) + ' logged in');
-                call(true);
+                call(isUser);
             });
 
             client.on('subscribe', (grp: Group) => {
